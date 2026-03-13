@@ -146,7 +146,7 @@ static void initialize_all_pads(void)
     const char *dbg = getenv("EVSHIM_DEBUG");
     g_debug_enabled = dbg && strchr("1yY", *dbg);
 
-    LOGI("EVSHIM initializing…\n");
+    LOGI("EVSHIM (gn) initializing…\n");
 
     handle = dlopen("libSDL2-2.0.so.0", RTLD_LAZY | RTLD_GLOBAL);
     if (!handle) { LOGE("dlopen SDL failed: %s\n", dlerror()); return; }
@@ -170,9 +170,11 @@ static void initialize_all_pads(void)
     for (int i = 0; i < players; ++i) {
 
         char path[256];
+        const char *home_dir = getenv("GAMENATIVE_HOME_DIR_NAME");
+        if (!home_dir) home_dir = "app.gamenative";  // fallback
         snprintf(path, sizeof path,
-                 "/data/data/app.gamenative/files/imagefs/tmp/gamepad%s.mem",
-                 (i == 0) ? "" : (char[2]){'0' + i, '\0'});
+                 "/data/data/%s/files/imagefs/tmp/gamepad%s.mem",
+                 home_dir, (i == 0) ? "" : (char[2]){'0' + i, '\0'});
 
         /* open once – store for reader + writer */
         read_fd  [i] = open(path, O_RDONLY);

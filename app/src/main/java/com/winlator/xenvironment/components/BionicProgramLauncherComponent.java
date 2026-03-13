@@ -52,6 +52,7 @@ import java.util.List;
 import app.gamenative.PluviaApp;
 import app.gamenative.events.AndroidEvent;
 import app.gamenative.service.SteamService;
+import app.gamenative.R;
 
 public class BionicProgramLauncherComponent extends GuestProgramLauncherComponent {
     private String guestExecutable;
@@ -185,10 +186,10 @@ public class BionicProgramLauncherComponent extends GuestProgramLauncherComponen
             String memPath;
             if (i == 0) {
                 // Player 1 uses the original, non-numbered path that is known to work.
-                memPath = "/data/data/app.gamenative/files/imagefs/tmp/gamepad.mem";
+                memPath = "/data/data/" + R.string.gamenative_home_storage_dir + "/files/imagefs/tmp/gamepad.mem";
             } else {
                 // Players 2, 3, 4 use a 1-based index.
-                memPath = "/data/data/app.gamenative/files/imagefs/tmp/gamepad" + i + ".mem";
+                memPath = "/data/data/" + R.string.gamenative_home_storage_dir + "/files/imagefs/tmp/gamepad" + i + ".mem";
             }
 
             File memFile = new File(memPath);
@@ -287,8 +288,9 @@ public class BionicProgramLauncherComponent extends GuestProgramLauncherComponen
         envVars.put("WINE_NEW_NDIS", "1");
 
         String ld_preload = "";
+        String nativeLibraryDir = context.getApplicationInfo().nativeLibraryDir;
         String sysvPath = imageFs.getLibDir() + "/libandroid-sysvshm.so";
-        String evshimPath = imageFs.getLibDir() + "/libevshim.so";
+        String evshimPath = nativeLibraryDir + "/libevshim.so";
         String replacePath = imageFs.getLibDir() + "/libredirect-bionic.so";
 
         if (new File(sysvPath).exists()) ld_preload += sysvPath;

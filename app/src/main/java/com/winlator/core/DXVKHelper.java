@@ -6,6 +6,7 @@ import com.winlator.core.envvars.EnvVars;
 import com.winlator.xenvironment.ImageFs;
 
 import java.io.File;
+import app.gamenative.R;
 
 public class DXVKHelper {
     public static final String DEFAULT_CONFIG = "version="+DefaultVersion.DXVK+",framerate=0,maxDeviceMemory=0";
@@ -17,7 +18,7 @@ public class DXVKHelper {
 
     public static void setEnvVars(Context context, KeyValueSet config, EnvVars envVars) {
         ImageFs imageFs = ImageFs.find(context);
-        envVars.put("DXVK_STATE_CACHE_PATH", "/data/data/app.gamenative/files/imagefs"+ImageFs.CACHE_PATH);
+        envVars.put("DXVK_STATE_CACHE_PATH", "/data/data/" + R.string.gamenative_home_storage_dir + "/files/imagefs"+ImageFs.CACHE_PATH);
         envVars.put("DXVK_LOG_LEVEL", "none");
 
         File rootDir = ImageFs.find(context).getRootDir();

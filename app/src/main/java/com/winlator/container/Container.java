@@ -13,7 +13,7 @@ import com.winlator.core.WineThemeManager;
 import com.winlator.fexcore.FEXCorePreset;
 import com.winlator.winhandler.WinHandler;
 import com.winlator.xenvironment.ImageFs;
-
+import app.gamenative.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -46,14 +46,14 @@ public class Container {
     public static final String DEFAULT_WINCOMPONENTS = "direct3d=1,directsound=1,directinput8=0,directinput=0,directmusic=0,directshow=0,directplay=0,vcrun2010=1,wmdecoder=1,opengl=0";
     public static final String FALLBACK_WINCOMPONENTS = "direct3d=1,directsound=1,directinput8=0,directinput=0,directmusic=1,directshow=1,directplay=1,vcrun2010=1,wmdecoder=1,opengl=0";
     public static final String[] MEDIACONV_ENV_VARS = {
-            "MEDIACONV_AUDIO_DUMP_FILE=/data/data/app.gamenative/files/imagefs/home/xuser/audio.dmp",
-            "MEDIACONV_VIDEO_DUMP_FILE=/data/data/app.gamenative/files/imagefs/home/xuser/video.dmp",
-            "MEDIACONV_VIDEO_TRANSCODED_FILE=/data/data/app.gamenative/files/imagefs/home/xuser/transcoded.mkv",
-            "MEDIACONV_AUDIO_TRANSCODED_FILE=/data/data/app.gamenative/files/imagefs/home/xuser/transcoded.wav",
-            "MEDIACONV_BLANK_AUDIO_FILE=/data/data/app.gamenative/files/imagefs/home/xuser/blank.wav",
-            "MEDIACONV_BLANK_VIDEO_FILE=/data/data/app.gamenative/files/imagefs/home/xuser/blank.mkv",
-    };
-    public static final String DEFAULT_DRIVES = "D:"+Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)+"E:/data/data/app.gamenative/storage";
+            "MEDIACONV_AUDIO_DUMP_FILE=" + R.string.gamenative_home_storage_dir + "audio.dmp",
+            "MEDIACONV_VIDEO_DUMP_FILE=" + R.string.gamenative_home_storage_dir + "video.dmp",
+            "MEDIACONV_VIDEO_TRANSCODED_FILE=" + R.string.gamenative_home_storage_dir + "transcoded.mkv",
+            "MEDIACONV_AUDIO_TRANSCODED_FILE=" + R.string.gamenative_home_storage_dir + "transcoded.wav",
+            "MEDIACONV_BLANK_AUDIO_FILE=" + R.string.gamenative_home_storage_dir + "blank.wav",
+            "MEDIACONV_BLANK_VIDEO_FILE=" + R.string.gamenative_home_storage_dir + "blank.mkv",
+        };
+    public static final String DEFAULT_DRIVES = "D:"+Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)+"E:/data/data/"+R.string.gamenative_home_storage_dir+"/storage";
     public static final String DEFAULT_VARIANT = DefaultVersion.VARIANT;
     public static final String DEFAULT_WINE_VERSION = DefaultVersion.WINE_VERSION;
     public static final byte STARTUP_SELECTION_NORMAL = 0;
@@ -81,7 +81,7 @@ public class Container {
     private String graphicsDriverConfig = DEFAULT_GRAPHICSDRIVERCONFIG;
     private String wincomponents = DEFAULT_WINCOMPONENTS;
     private String audioDriver = DEFAULT_AUDIO_DRIVER;
-    private String drives = DEFAULT_DRIVES;
+    private String drives;
     private String wineVersion = WineInfo.MAIN_WINE_VERSION.identifier();
     private boolean showFPS;
     private boolean launchRealSteam;
@@ -220,11 +220,12 @@ public class Container {
     }
 
     public String getEnvVars() {
-        return envVars;
+        return envVars + " GAMENATIVE_HOME_DIR_NAME=" + R.string.gamenative_home_storage_dir;
     }
 
     public void setEnvVars(String envVars) {
         this.envVars = envVars != null ? envVars : "";
+        this.envVars += " GAMENATIVE_HOME_DIR_NAME=" + R.string.gamenative_home_storage_dir;
     }
 
     public String getGraphicsDriver() {

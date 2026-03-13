@@ -108,22 +108,28 @@ android {
 
     buildTypes {
         debug {
+            applicationIdSuffix = ".debug"
+            resValue("string", "app_name", "GameNative-debug")
+            resValue("string", "gamenative_home_storage_dir", "app.gamenative.debug")
             isDebuggable = true
             isMinifyEnabled = false
             isShrinkResources = false
             signingConfig = signingConfigs.getByName("debug")
         }
         release {
+            resValue("string", "gamenative_home_storage_dir", "app.gamenative")
             isMinifyEnabled = true
             isShrinkResources = true
             signingConfig = signingConfigs.getByName("debug")
         }
         create("release-signed") {
+            resValue("string", "gamenative_home_storage_dir", "app.gamenative")
             isMinifyEnabled = true
             isShrinkResources = true
             signingConfig = signingConfigs.getByName("pluvia")
         }
         create("release-gold") {
+            resValue("string", "gamenative_home_storage_dir", "app.gamenative")
             isMinifyEnabled = true
             isShrinkResources = true
             signingConfig = signingConfigs.getByName("pluvia")
@@ -178,13 +184,13 @@ android {
         ignoreFormatFailures  = false
     }
 
-    // build extras needed in libwinlator_bionic.so
-    // externalNativeBuild {
-    //     cmake {
-    //         path = file("src/main/cpp/extras/CMakeLists.txt")   // the file shown above
-    //         version = "3.22.1"
-    //     }
-    // }
+    // build extras needed in libevshim.so
+    externalNativeBuild {
+        cmake {
+            path = file("src/main/cpp/extras/CMakeLists.txt")   // the file shown above
+            version = "3.22.1"
+        }
+    }
 
     // cmake on release builds a proot that fails to process ld-2.31.so
     // externalNativeBuild {
